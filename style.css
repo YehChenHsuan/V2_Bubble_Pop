@@ -1,5 +1,5 @@
 /* =========================================================
-   style.css - ESL 視訊單字泡泡遊戲 核心現代美學樣式 (Lesson 2 V2 專用)
+   style.css - ESL 視訊單字泡泡遊戲 核心現代美學樣式 (Daily Routine 生活作息與早晚生活習慣 V2 專用)
    特色：Glassmorphism 玻璃擬態、擬真彩虹肥皂泡、微動態與高對比
    ========================================================= */
 
@@ -14,7 +14,7 @@
   --glass-shadow: 0 10px 30px 0 rgba(31, 38, 135, 0.2);
   --text-main: #1e293b;
   --text-muted: #64748b;
-  --bubble-size: 144px;
+  --bubble-size: 156px;
 }
 
 * {
@@ -418,20 +418,45 @@ body {
 .bubble-word-content {
   position: relative;
   z-index: 2;
-  padding: 8px 12px;
+  padding: 6px 8px;
   pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+/* 單字文字放大與高對比強化樣式 (滿足大字體、高清晰度閱讀需求) */
+.bubble-word,
 .bubble-en {
-  font-size: 20px;
-  font-weight: 800;
+  position: relative;
+  z-index: 2;
+  font-size: clamp(23px, 2.4vw, 28px);
+  font-weight: 900;
   color: #0f172a;
   text-shadow:
-    0 1px 2px rgba(255, 255, 255, 0.9),
-    0 0 10px rgba(255, 255, 255, 0.8);
-  letter-spacing: 0.5px;
+    0 1px 2px rgba(255, 255, 255, 1),
+    0 0 12px rgba(255, 255, 255, 0.95),
+    0 0 22px rgba(255, 255, 255, 0.85);
+  letter-spacing: -0.2px;
   word-break: break-word;
-  line-height: 1.15;
+  line-height: 1.12;
+  max-width: 94%;
+  padding: 2px 4px;
+  text-align: center;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: font-size 0.2s ease;
+}
+
+/* 長單字微調字體大小 (如 supermarket, restaurant, breakfast, rectangle)，確保圓形泡泡內單行完整排版且不拆字斷行 */
+.bubble-word.compact-word,
+.bubble-en.compact-word {
+  font-size: clamp(17px, 1.55vw, 19.5px);
+  letter-spacing: -0.5px;
+  line-height: 1.05;
+  white-space: nowrap;
 }
 
 /* 6 個精準環繞插槽座標配置 */
@@ -1009,4 +1034,223 @@ body {
   .toggle-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* =========================================================
+   單字自訂選取面板樣式 (Word Selector Modal)
+   ========================================================= */
+.modal-lg {
+  max-width: 860px !important;
+  width: 92vw !important;
+  max-height: 90vh !important;
+  display: flex;
+  flex-direction: column;
+}
+
+.word-select-trigger-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+.word-count-badge {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.custom-word-btn {
+  background: linear-gradient(135deg, var(--primary-color), #2563eb);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px var(--primary-glow);
+}
+
+.custom-word-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+.word-select-summary-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.count-highlight {
+  color: var(--primary-color);
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.min-warn-pill {
+  background: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #f87171;
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  animation: pulseWarn 1.5s infinite;
+}
+
+@keyframes pulseWarn {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.65; }
+}
+
+.word-quick-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.quick-act-btn {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--text-main);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.quick-act-btn:hover {
+  background: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.word-grid-scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  margin: 14px 0;
+  padding-right: 6px;
+  max-height: 48vh;
+}
+
+.word-grid-scroll-area::-webkit-scrollbar {
+  width: 6px;
+}
+.word-grid-scroll-area::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.4);
+  border-radius: 3px;
+}
+
+.word-checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 10px;
+}
+
+.word-check-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 12px;
+  padding: 8px 10px;
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.word-check-card:hover {
+  background: rgba(255, 255, 255, 0.85);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+}
+
+.word-check-card.checked {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 12px var(--primary-glow);
+}
+
+.word-check-card input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary-color);
+  cursor: pointer;
+}
+
+.word-card-thumb {
+  width: 38px;
+  height: 38px;
+  object-fit: cover;
+  border-radius: 6px;
+  background: #f1f5f9;
+  border: 1px solid rgba(0,0,0,0.06);
+  flex-shrink: 0;
+}
+
+.word-card-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.word-card-en {
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.word-card-zh {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.word-card-audio-btn {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.word-card-audio-btn:hover {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+.modal-footer-between {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
 }
